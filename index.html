@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrickIt — UK Digital Agency | Custom Web & Booking Systems</title>
+  <meta name="description" content="TrickIt builds bespoke web development, custom booking engines, and digital infrastructure. Based in the UK, trading globally." />
+  <meta name="theme-color" content="#0B0F17" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#0B0F17",
+            cyan: "#00F2FE",
+            violet: "#7928CA",
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            glow: "0 0 40px rgba(0, 242, 254, 0.15)",
+            "glow-violet": "0 0 40px rgba(121, 40, 202, 0.2)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #0B0F17;
+      color: #e2e8f0;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #00F2FE 0%, #7928CA 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .glow-border {
+      position: relative;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .glow-border::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.35), rgba(121, 40, 202, 0.25), transparent 60%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00F2FE, #7928CA);
+      box-shadow: 0 0 24px rgba(0, 242, 254, 0.25);
+    }
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 0 32px rgba(0, 242, 254, 0.4);
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00F2FE, #7928CA);
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .hero-grid {
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 242, 254, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(121, 40, 202, 0.15), transparent),
+        linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+      background-size: auto, auto, 48px 48px, 48px 48px;
+    }
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    #mobile-menu.open { max-height: 360px; }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 border-b border-white/5 bg-[#0B0F17]/80 backdrop-blur-xl">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6 lg:px-8">
+      <a href="#top" class="text-xl font-bold tracking-tight">
+        <span class="gradient-text">Trick</span><span class="text-white">It</span>
+      </a>
+
+      <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <a href="#services" class="nav-link text-sm text-slate-300 transition hover:text-white">Services</a>
+        <a href="#work" class="nav-link text-sm text-slate-300 transition hover:text-white">Work</a>
+        <a href="#about" class="nav-link text-sm text-slate-300 transition hover:text-white">About</a>
+        <a href="#contact" class="nav-link text-sm text-slate-300 transition hover:text-white">Contact</a>
+      </nav>
+
+      <a href="#contact" class="btn-primary hidden rounded-lg px-4 py-2 text-sm font-semibold text-[#0B0F17] transition md:inline-flex">
+        Get in Touch
+      </a>
+
+      <button
+        id="menu-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-lg border border-white/10 p-2 text-slate-200 transition hover:border-cyan/40 hover:text-cyan md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle menu"
+      >
+        <i data-lucide="menu" class="menu-icon h-5 w-5"></i>
+        <i data-lucide="x" class="close-icon hidden h-5 w-5"></i>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="border-t border-white/5 bg-[#0B0F17]/95 md:hidden">
+      <nav class="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-4" aria-label="Mobile">
+        <a href="#services" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white">Services</a>
+        <a href="#work" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white">Work</a>
+        <a href="#about" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white">About</a>
+        <a href="#contact" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white">Contact</a>
+        <a href="#contact" class="btn-primary mobile-link mt-2 rounded-lg px-4 py-2.5 text-center text-sm font-semibold text-[#0B0F17]">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero-grid relative overflow-hidden border-b border-white/5">
+      <div class="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-5 py-20 sm:px-6 lg:px-8">
+        <div class="inline-flex w-fit items-center gap-2 rounded-full border border-cyan/20 bg-cyan/5 px-3 py-1 text-xs font-medium text-cyan shadow-glow sm:text-sm">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan"></span>
+          Based in the UK • Trading Globally
+        </div>
+
+        <h1 class="mt-6 max-w-4xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl lg:leading-[1.08]">
+          We Don't Just Build Systems.<br class="hidden sm:block" />
+          <span class="gradient-text">We Trick Them Out.</span>
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+          Bespoke web development, custom booking engines, and digital infrastructure built to scale.
+        </p>
+
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a href="#work" class="btn-primary inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-[#0B0F17] transition">
+            View Our Work
+            <i data-lucide="arrow-right" class="h-4 w-4"></i>
+          </a>
+          <a href="#contact" class="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:border-violet/50 hover:bg-violet/10">
+            Contact Us
+            <i data-lucide="message-square" class="h-4 w-4"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="border-b border-white/5 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+        <div class="max-w-2xl">
+          <p class="text-sm font-semibold uppercase tracking-wider text-cyan">Services</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">The TrickIt Edge</h2>
+          <p class="mt-4 text-slate-400">Three core offerings. Built custom. Shipped fast.</p>
+        </div>
+
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          <article class="glow-border group rounded-2xl p-6 transition hover:shadow-glow sm:p-8">
+            <div class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
+              <i data-lucide="code-2" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">Custom Web Development</h3>
+            <p class="mt-3 text-sm leading-relaxed text-slate-400">
+              Tailored, lightning-fast sites built from scratch — not templates. Performance, clarity, and conversion first.
+            </p>
+          </article>
+
+          <article class="glow-border group rounded-2xl p-6 transition hover:shadow-glow-violet sm:p-8">
+            <div class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-violet/15 text-[#c084fc]">
+              <i data-lucide="calendar-check" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">Bespoke Booking Systems</h3>
+            <p class="mt-3 text-sm leading-relaxed text-slate-400">
+              Custom internal workflows, equipment tracking, and booking engines that match how your team actually works.
+            </p>
+          </article>
+
+          <article class="glow-border group rounded-2xl p-6 transition hover:shadow-glow sm:p-8">
+            <div class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
+              <i data-lucide="server" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">Digital Infrastructure</h3>
+            <p class="mt-3 text-sm leading-relaxed text-slate-400">
+              Platform setups, backend systems, and media performance — the stack behind the screens.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="work" class="border-b border-white/5 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+        <div class="max-w-2xl">
+          <p class="text-sm font-semibold uppercase tracking-wider text-cyan">Portfolio</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">Selected Work</h2>
+          <p class="mt-4 text-slate-400">Real builds for businesses, creators, and service teams.</p>
+        </div>
+
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          <a href="https://radioforus.co.uk" target="_blank" rel="noopener noreferrer" class="glow-border group block rounded-2xl p-6 transition hover:shadow-glow sm:p-8">
+            <div class="mb-6 flex items-start justify-between gap-3">
+              <span class="rounded-full border border-cyan/20 bg-cyan/5 px-2.5 py-1 text-xs font-medium text-cyan">Web Platform</span>
+              <i data-lucide="external-link" class="h-4 w-4 text-slate-500 transition group-hover:text-cyan"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">Radio For Us</h3>
+            <p class="mt-1 text-sm text-slate-500">radioforus.co.uk</p>
+            <p class="mt-4 text-sm leading-relaxed text-slate-400">
+              Modern web platform and audio infrastructure build for a creator-focused radio community.
+            </p>
+          </a>
+
+          <a href="https://johnkinski.com" target="_blank" rel="noopener noreferrer" class="glow-border group block rounded-2xl p-6 transition hover:shadow-glow-violet sm:p-8">
+            <div class="mb-6 flex items-start justify-between gap-3">
+              <span class="rounded-full border border-violet/30 bg-violet/10 px-2.5 py-1 text-xs font-medium text-[#c084fc]">Personal Brand</span>
+              <i data-lucide="external-link" class="h-4 w-4 text-slate-500 transition group-hover:text-[#c084fc]"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">John Kinski</h3>
+            <p class="mt-1 text-sm text-slate-500">johnkinski.com</p>
+            <p class="mt-4 text-sm leading-relaxed text-slate-400">
+              Tailored personal brand and digital presence — fast, sharp, built to convert inquiries.
+            </p>
+          </a>
+
+          <article class="glow-border group rounded-2xl p-6 transition hover:shadow-glow sm:p-8">
+            <div class="mb-6 flex items-start justify-between gap-3">
+              <span class="rounded-full border border-cyan/20 bg-cyan/5 px-2.5 py-1 text-xs font-medium text-cyan">Booking Engine</span>
+              <i data-lucide="wrench" class="h-4 w-4 text-slate-500"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">Rockwell Hitec Inkjet Service</h3>
+            <p class="mt-1 text-sm text-slate-500">Internal system</p>
+            <p class="mt-4 text-sm leading-relaxed text-slate-400">
+              Custom projector &amp; equipment booking system built for service workflows and team scheduling.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="border-b border-white/5 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+        <div class="glow-border grid gap-10 rounded-2xl p-8 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wider text-cyan">About</p>
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">Powered by Technical Mastery</h2>
+            <p class="mt-5 text-base leading-relaxed text-slate-400">
+              <span class="font-medium text-white">Jack Brown</span> is Lead Developer &amp; Founder of TrickIt.
+              Hands-on system builds, custom tools, and modern web craftsmanship — from booking engines to creator platforms.
+              No layers of account managers. Just direct technical ownership from brief to ship.
+            </p>
+            <ul class="mt-6 space-y-3 text-sm text-slate-300">
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="h-4 w-4 shrink-0 text-cyan"></i>
+                Custom tools built around real workflows
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="h-4 w-4 shrink-0 text-cyan"></i>
+                Modern stack, performance-first delivery
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="h-4 w-4 shrink-0 text-cyan"></i>
+                UK-based, available to clients worldwide
+              </li>
+            </ul>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-gradient-to-br from-cyan/10 via-transparent to-violet/20 p-8">
+            <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0B0F17]/60 text-cyan shadow-glow">
+              <i data-lucide="cpu" class="h-7 w-7"></i>
+            </div>
+            <p class="text-lg font-semibold text-white">Jack Brown</p>
+            <p class="mt-1 text-sm text-slate-400">Lead Developer &amp; Founder</p>
+            <p class="mt-4 text-sm leading-relaxed text-slate-400">
+              Trading as TrickIt — building digital products that actually earn their keep.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wider text-cyan">Contact</p>
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">Let's build something sharp.</h2>
+            <p class="mt-4 text-slate-400">
+              Tell us what you need. We reply fast — usually within 24 hours.
+            </p>
+
+            <div class="mt-8 space-y-4 text-sm">
+              <a href="mailto:hello@trickit.co.uk" class="flex items-center gap-3 text-slate-300 transition hover:text-cyan">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                  <i data-lucide="mail" class="h-4 w-4"></i>
+                </span>
+                hello@trickit.co.uk
+              </a>
+              <p class="flex items-center gap-3 text-slate-300">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                  <i data-lucide="globe" class="h-4 w-4"></i>
+                </span>
+                TrickIt.co.uk
+              </p>
+              <p class="flex items-center gap-3 text-slate-300">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                  <i data-lucide="map-pin" class="h-4 w-4"></i>
+                </span>
+                United Kingdom
+              </p>
+            </div>
+          </div>
+
+          <form id="contact-form" class="glow-border space-y-5 rounded-2xl p-6 sm:p-8" novalidate>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <label class="block space-y-2">
+                <span class="text-sm font-medium text-slate-300">Name</span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  autocomplete="name"
+                  placeholder="Your name"
+                  class="w-full rounded-lg border border-white/10 bg-[#0B0F17]/80 px-3.5 py-2.5 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan/50 focus:ring-1 focus:ring-cyan/30"
+                />
+              </label>
+              <label class="block space-y-2">
+                <span class="text-sm font-medium text-slate-300">Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  placeholder="you@company.com"
+                  class="w-full rounded-lg border border-white/10 bg-[#0B0F17]/80 px-3.5 py-2.5 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan/50 focus:ring-1 focus:ring-cyan/30"
+                />
+              </label>
+            </div>
+
+            <label class="block space-y-2">
+              <span class="text-sm font-medium text-slate-300">Service Needed</span>
+              <select
+                name="service"
+                required
+                class="w-full appearance-none rounded-lg border border-white/10 bg-[#0B0F17]/80 px-3.5 py-2.5 text-sm text-white outline-none transition focus:border-cyan/50 focus:ring-1 focus:ring-cyan/30"
+              >
+                <option value="" disabled selected>Select a service</option>
+                <option value="Custom Web Development">Custom Web Development</option>
+                <option value="Bespoke Booking Systems">Bespoke Booking Systems</option>
+                <option value="Digital Infrastructure">Digital Infrastructure</option>
+                <option value="Something else">Something else</option>
+              </select>
+            </label>
+
+            <label class="block space-y-2">
+              <span class="text-sm font-medium text-slate-300">Message</span>
+              <textarea
+                name="message"
+                required
+                rows="5"
+                placeholder="What are you looking to build?"
+                class="w-full resize-y rounded-lg border border-white/10 bg-[#0B0F17]/80 px-3.5 py-2.5 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan/50 focus:ring-1 focus:ring-cyan/30"
+              ></textarea>
+            </label>
+
+            <div class="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
+              <button type="submit" class="btn-primary inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-[#0B0F17] transition">
+                Send Message
+                <i data-lucide="send" class="h-4 w-4"></i>
+              </button>
+              <p id="form-status" class="text-sm text-slate-500" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-10">
+    <div class="mx-auto flex max-w-6xl flex-col gap-4 px-5 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <div>
+        <p class="text-sm font-semibold">
+          <span class="gradient-text">Trick</span><span class="text-white">It</span>
+        </p>
+        <p class="mt-1 text-sm text-slate-500">© 2026 TrickIt. All rights reserved.</p>
+      </div>
+      <p class="text-sm text-slate-500">Jack Brown trading as TrickIt.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    // Mobile menu
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    const menuIcon = toggle.querySelector(".menu-icon");
+    const closeIcon = toggle.querySelector(".close-icon");
+
+    function setMenuOpen(open) {
+      menu.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      menuIcon.classList.toggle("hidden", open);
+      closeIcon.classList.toggle("hidden", !open);
+    }
+
+    toggle.addEventListener("click", () => {
+      setMenuOpen(!menu.classList.contains("open"));
+    });
+
+    document.querySelectorAll(".mobile-link").forEach((link) => {
+      link.addEventListener("click", () => setMenuOpen(false));
+    });
+
+    // Contact form → mailto
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const service = String(data.get("service") || "").trim();
+      const message = String(data.get("message") || "").trim();
+
+      if (!name || !email || !service || !message) {
+        status.textContent = "Please fill in all fields.";
+        status.className = "text-sm text-red-400";
+        return;
+      }
+
+      const subject = encodeURIComponent(`TrickIt inquiry — ${service}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`
+      );
+
+      status.textContent = "Opening your email client…";
+      status.className = "text-sm text-cyan";
+      window.location.href = `mailto:hello@trickit.co.uk?subject=${subject}&body=${body}`;
+      form.reset();
+    });
+  </script>
+</body>
+</html>
